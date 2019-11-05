@@ -34,18 +34,23 @@ Proof: M(l,k) = M(k,l) = M(M(i,j),l) = M(M(i,l),j) = M(M(l,i),j) by P1 and S3.
 Proposition 3 (P3) is useful in the sense that if we have M(i,j) = k, then the column k can be deduced from column i and column j.
 
 ## Algorithm
-We use a algebraic style algorithm. Basically, we remain a family of disjoint sets. Entries that are in the same set has the same value. By adding value for an entry, it
+We use an algebraic style algorithm. Basically, we remain a family of disjoint sets. Entries that are in the same set has the same value. By adding value for an entry, it
 1. adds value to the set that is pointed by the entry;
 2. causes some set to be joined as a result of S3;
 3. causes some entry to be set as a result of S2.
 
 ## Data Structures
+    // remember throughout this project, we are using MATH convention
+    // for values and CS convention for positions.
+
     class ValueSet {
         public:
         ValueSet (int v, const vector<pair<int,int>>& e);
         string name; // a name for it (in order for print with undefined value)
         int value; // 0 if undefined, which acts as an unknown.
-        vector<pair<int,int>> elements;
+        // if value==0, then this is stored in undefined_sets
+        // if value>0, then this is stored at defined_sets[value-1];
+        vector<pair<int,int>> elements; // store the positions of the set elements
     };
 
     class DeduceTable {
@@ -54,7 +59,8 @@ We use a algebraic style algorithm. Basically, we remain a family of disjoint se
         int unknowns;
         int n;
 
-        unordered_set<ValueSet*> sets;
+        unordered_set<ValueSet*> undefined_sets; // undefined sets
+        vector<ValueSet*> defined_sets; // value sets 1,2,...,n
         vector<vector<ValueSet*>> dtable;
         // invariance:
         // table[i,j] must always point to the valueset that contains it
@@ -71,7 +77,7 @@ We use a algebraic style algorithm. Basically, we remain a family of disjoint se
                             // has undefined value (i.e. value=0)
 
         Table make_copy(); // make all memory allocation
-        void freeSet(); // free all memory allocation (call it for destruction)
+        void freeSets(); // free all memory allocation (call it for destruction)
         
         void listAllTables(string filename); //
 
@@ -86,6 +92,7 @@ We use a algebraic style algorithm. Basically, we remain a family of disjoint se
         // value table for file I/O and property check
         public:
         Table(const DeduceTable& dt);
+        Table();
 
         int n;
         vector<vector<int>> table;
