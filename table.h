@@ -71,13 +71,13 @@ class Table {
     // value table for file I/O and property check
     public:
     Table(const DeduceTable& dt);
-    Table();
+    Table(int nn);
 
     int n;
     vector<vector<int>> table;
 
-    friend ifstream& operator>> (ifstream& ifs, Table& t);
-    friend ofstream& operator<< (ofstream& ofs, Table& t);
+    friend istream& operator>> (istream& ifs, Table& t);
+    friend ostream& operator<< (ostream& ofs, Table& t);
 
     void print();
     void check();

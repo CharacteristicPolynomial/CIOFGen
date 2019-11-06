@@ -343,8 +343,11 @@ int DeduceTable::listAllTables(string filename) {
     }
 }
 
-Table::Table() {
-
+Table::Table(int nn) {
+    n = nn;
+    for(int i=0; i<n; i++) {
+        table.push_back(vector<int>(n));
+    }
 }
 
 Table::Table(const DeduceTable& dt) {
@@ -380,7 +383,7 @@ void Table::print() {
 }
 
 void Table::check() {
-    cout << "checking matrix" << endl;
+    cout << "checking matrix:" << endl;
     print();
     if(    !checkAchievability()
         || !checkIdemPotence()
@@ -389,6 +392,8 @@ void Table::check() {
     ) {
         cout << "axiom check fails" << endl;
         exit(-1);
+    } else {
+        cout << "OK!" << endl;
     }
 }
 
@@ -448,11 +453,16 @@ bool Table::checkMonotonicity() {
     return true;
 }
 
-ifstream& operator>> (ifstream& ifs, Table& t) {
+istream& operator>> (istream& ifs, Table& t) {
+    for(int i=0; i<t.n; i++) {
+        for (int j=0; j<t.n; j++) {
+            ifs >> t.table[i][j];
+        }
+    }
     return ifs;
 }
 
-ofstream& operator<< (ofstream& ofs, Table& t) {
+ostream& operator<< (ostream& ofs, Table& t) {
     for(int i=0; i<t.n; i++) {
         for (int j=0; j<t.n; j++) {
             ofs << t.table[i][j] << "\t";
