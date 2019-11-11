@@ -472,7 +472,66 @@ ostream& operator<< (ostream& ofs, Table& t) {
     return ofs;
 }
 
+void StateMatrix::transpose() {
+    // completeness check
+    for(int i=0; i<dim; i++) {
+        if((int) m[i].v.size()<dim) {
+            cerr << "Error: transposing a partial matrix" << endl;
+            exit(-1);
+        }
+    }
+
+    for(int i=0; i<dim; i++) {
+        for(int j=0; j<dim; j++) {
+            int temp;
+            temp = (m[i].v)[j];
+            (m[i].v)[j] = (m[j].v)[i];
+            (m[j].v)[i] = temp;
+        }
+    }
+}
+
+void StateMatrix::appendTo(string file)  {
+    ofstream ofs;
+    ofs.open(file, ios_base::app);
+    for(int i=0; i<dim; i++) {
+        for(int j=0; j<dim; j++) {
+            ofs << (m[j].v)[i] << "\t";
+        }
+        ofs << endl;
+    }
+    ofs << endl;
+    ofs.close();
+}
 
 void Table::diagonalize(string Pfile, string QTfile) {
-    
+    StateMatrix QT(n);
+    // calculate QT, whose columns are all children
+    for (int i=0; i<n; i++) {
+        StateVector temp(n);
+        for(int j=0; j<n; j++) {
+            temp.v[table[j][i]-1] = 1;
+        }
+        QT.m[i] = temp;
+    }
+    QT.appendTo(QTfile);
+
+    StateMatrix P(n);
+    for(int k=0; k<n; k++) {
+        StateVector temp(n);
+        temp.v[k] = 1;
+        for(int j=0; j<n; j++) {
+            int jumpto = table[k][j]-1;
+            if(jumpto == k)
+                continue;
+            StateVector temp2(n);
+            temp2 = temp;
+            for(int i=0; i<n; i++) {
+                temp2.v[table[i][j]-1] -= temp.v[i];
+            }
+            temp = temp2;
+        }
+        P.m[k] = temp;
+    }
+    P.appendTo(Pfile);
 }

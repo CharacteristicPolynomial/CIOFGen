@@ -92,3 +92,29 @@ class Table {
 
     void diagonalize(string Pfile, string QTfile);
 };
+
+class StateVector {
+public:
+    StateVector(int d) {
+        dim = d;
+        v.resize(dim);
+    }
+    StateVector() {
+
+    }
+    int dim;
+    vector<int> v;
+};
+
+class StateMatrix {
+public:
+    StateMatrix(int d) {
+        dim = d;
+        m.resize(dim);
+    }
+    int dim;
+    vector<StateVector> m; // state vectors are column vectors
+
+    void transpose();
+    void appendTo(string file);
+};
