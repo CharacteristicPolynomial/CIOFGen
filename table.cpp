@@ -471,3 +471,8 @@ ostream& operator<< (ostream& ofs, Table& t) {
     }
     return ofs;
 }
+
+
+void Table::diagonalize(string Pfile, string QTfile) {
+    
+}

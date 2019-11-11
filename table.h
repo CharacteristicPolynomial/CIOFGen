@@ -6,6 +6,10 @@
 #include <unordered_set>
 #define FILE_PREFIX "CIOF_" 
 #define FILE_SUFFIX ".result"
+#define PFILE_PREFIX "CIOF_" 
+#define PFILE_SUFFIX ".P"
+#define QTFILE_PREFIX "CIOF_" 
+#define QTFILE_SUFFIX ".QT"
 #define NAME_LENGTH 3
 using namespace std;
 
@@ -85,4 +89,6 @@ class Table {
     bool checkIdemPotence();
     bool checkCommutativity();
     bool checkMonotonicity();
+
+    void diagonalize(string Pfile, string QTfile);
 };

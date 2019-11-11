@@ -5,6 +5,7 @@ A generator for all CIOFs (commutative and idempotent operation families) with c
     $ make              # complie executables
     $ ./gen 5           # generate all 5*5 CIOF
     $ ./check 5 file    # check the file
+    $ ./diag 5 file     # diagonalize
 
 ## Specifications
 - Input: (int) n
