@@ -430,8 +430,9 @@ bool Table::checkCommutativity() {
                     table[table[i][l]-1][k]
                 ) {
                     cout << "commutativity check fails" << endl;
-                    cout << "(i,k,l)= " << i << " "
-                        << k << " " << l << endl;
+                    printf("M[M[%d,%d],%d]=%d\nM[M[%d,%d],%d]=%d\n", 
+                        i+1,k+1,l+1,table[table[i][k]-1][l],i+1,l+1,k+1,table[table[i][l]-1][k]);
+                    cout << flush;
                     return false;
                 }
             }

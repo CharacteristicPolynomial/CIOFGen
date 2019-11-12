@@ -11,3 +11,6 @@ gen: gen.cpp table.cpp
 
 diag: diag.cpp table.cpp
 	g++ -Wall diag.cpp table.cpp -o diag
+
+clean:
+	rm check checkDistinct gen diag
