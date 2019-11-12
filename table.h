@@ -82,6 +82,7 @@ class Table {
 
     friend istream& operator>> (istream& ifs, Table& t);
     friend ostream& operator<< (ostream& ofs, Table& t);
+    friend bool operator== (Table& t1, Table& t2);
 
     void print();
     void check();

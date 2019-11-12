@@ -472,6 +472,18 @@ ostream& operator<< (ostream& ofs, Table& t) {
     return ofs;
 }
 
+bool operator== (Table& t1, Table& t2) {
+    if(t1.n != t2.n) 
+        return false;
+    for(int i=0; i<t1.n; i++) {
+        for(int j=0; j<t1.n; j++) {
+            if(t1.table[i][j] != t2.table[i][j])
+                return false;
+        }
+    }
+    return true;
+}
+
 void StateMatrix::transpose() {
     // completeness check
     for(int i=0; i<dim; i++) {

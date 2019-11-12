@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(int argc, const char* argv[]) {
-    // format: ./gen [n]
+    // format: ./check [n] filename
     if(argc < 3) {
         cerr << "Missing argument. Format: ./check [n] filename" << endl;
         exit(-1);
